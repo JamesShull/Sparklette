@@ -47,7 +47,7 @@ test:
 	$(VENV_DIR)/bin/pytest app/tests  # Assuming tests are in app/tests and pytest is installed in venv
 
 # Build the Docker image
-build: requirements
+build:
 	@echo "Building Docker image..."
 	docker build -t $(IMAGE_NAME) .
 
@@ -58,10 +58,6 @@ deploy: build
 	-docker rm $(CONTAINER_NAME)
 	docker run -d -p 8000:8000 --name $(CONTAINER_NAME) $(IMAGE_NAME)
 	@echo "Application is running on http://localhost:8000"
-
-# Generate requirements.txt for backend (optional, if not using uv sync in Docker)
-requirements:
-	uv pip freeze > requirements.txt
 
 # Lint the code (optional)
 lint:
@@ -88,7 +84,6 @@ help:
 	@echo "  test           - Run tests"
 	@echo "  build          - Build the Docker image"
 	@echo "  deploy         - Deploy (run) the Docker container"
-	@echo "  requirements   - Generate requirements.txt for backend (if needed)"
 	@echo "  lint           - Lint the code (frontend and backend)"
 	@echo "  serve-frontend - Serve frontend locally for development"
 	@echo "  serve-backend  - Serve backend locally for development"
