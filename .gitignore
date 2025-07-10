@@ -27,6 +27,7 @@ cython_debug/
 *.egg-info/
 dist/
 build/
+.venv/
 
 # Frontend node_modules
 frontend/node_modules/
