@@ -57,8 +57,8 @@ deploy: build
 	@echo "Deploying Docker container..."
 	-docker stop $(CONTAINER_NAME)
 	-docker rm $(CONTAINER_NAME)
-	docker run -d -p 8000:8000 --name $(CONTAINER_NAME) $(IMAGE_NAME)
-	@echo "Application is running on http://localhost:8000"
+	docker run -d -p 8080:8080 --name $(CONTAINER_NAME) $(IMAGE_NAME)
+	@echo "Application is running on http://localhost:8080"
 
 # Lint the code (optional)
 lint:
@@ -75,7 +75,7 @@ serve-frontend:
 # Serve backend locally for development (optional)
 serve-backend: venv
 	@echo "Serving backend locally..."
-	$(VENV_DIR)/bin/uvicorn app.main:app --reload --port 8001
+	$(VENV_DIR)/bin/uvicorn app.main:app --reload --port 8080
 
 help:
 	@echo "Available targets:"
