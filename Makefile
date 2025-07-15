@@ -26,8 +26,9 @@ install: venv
 	@echo "Installing frontend dependencies..."
 	(cd frontend && npm install)
 	@echo "Installing backend dependencies into $(VENV_DIR)..."
-	@echo "If this is the first time, it might take a while to download packages."
-	uv sync --python $(VENV_DIR)/bin/python --no-cache --all-extras
+	. $(VENV_DIR)/bin/activate && uv pip compile pyproject.toml -o requirements.txt
+	. $(VENV_DIR)/bin/activate && uv pip compile pyproject.toml --extra dev -o requirements-dev.txt
+	. $(VENV_DIR)/bin/activate && uv pip sync requirements-dev.txt
 
 # Create virtual environment
 venv:
@@ -44,7 +45,7 @@ test:
 	@echo "Running tests..."
 	# Add test commands here once test setup is complete
 	# For now, just a placeholder
-	$(VENV_DIR)/bin/pytest app/tests  # Assuming tests are in app/tests and pytest is installed in venv
+	PYTHONPATH=. $(VENV_DIR)/bin/pytest app/tests  # Assuming tests are in app/tests and pytest is installed in venv
 
 # Build the Docker image
 build:
